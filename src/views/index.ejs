@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+</head>
+<body>
+   <nav>
+        <div class="nav-container">
+            <h1 class="logo"><a href="/">Clubhouse</a></h1>
+            <div class="auth-links">
+                <% if (user) { %>
+                    <span class="user-tag">Hi, <%= user.first_name %></span>
+                    <a href="/log-out" class="btn-text">Log Out</a>
+                <% } else { %>
+                    <a href="/log-in" class="btn-text">Log In</a>
+                    <a href="/sign-up" class="btn-primary">Sign Up</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <% if (!user) { %>
+            <section class="welcome-hero">
+                <h1>Welcome to the Private Club</h1>
+                <p>A place for members to share thoughts securely. Want to see who's talking?</p>
+                <div class="hero-actions">
+                    <a href="/sign-up" class="btn-large">Create an Account</a>
+                    <p>Already a member? <a href="/log-in">Log in here</a></p>
+                </div>
+            </section>
+        <% } else { %>
+            <section class="dashboard-header">
+                <h2>Message Feed</h2>
+                <div class="dashboard-actions">
+                    <a href="/create-message" class="btn-secondary">+ New Message</a>
+                    
+                    <% if (!user.membership_status) { %>
+                        <a href="/join-club" class="btn-warning">🔑 Enter Passcode</a>
+                    <% } %>
+                    
+                    <% if (user.is_admin) { %>
+                        <span class="admin-badge">Admin Privileges Active</span>
+                    <% } %>
+                </div>
+            </section>
+        <% } %>
+
+        <hr class="divider">
+
+        <section class="feed">
+            <% if (messages && messages.length > 0) { %>
+                <% messages.forEach(msg => { %>
+                    <article class="message-card">
+                        <div class="card-header">
+                            <h3><%= msg.title %></h3>
+                            <% if (user && user.is_admin) { %>
+                                <form action="/delete-message/<%= msg.id %>" method="POST">
+                                    <button type="submit" class="btn-delete" onclick="return confirm('Delete this message?')">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                        
+                        <p class="content"><%= msg.text %></p>
+
+                        <div class="card-footer">
+                            <% if (user && user.membership_status) { %>
+                                <div class="meta">
+                                    <span class="author">👤 <%= msg.first_name %> <%= msg.last_name %></span>
+                                    <span class="date">📅 <%= new Date(msg.timestamp).toDateString() %></span>
+                                </div>
+                            <% } else { %>
+                                <span class="locked">🔒 Author and date are hidden. <a href="/join-club">Join the club</a> to reveal.</span>
+                            <% } %>
+                        </div>
+                    </article>
+                <% }) %>
+            <% } else { %>
+                <div class="empty-state">
+                    <p>No messages yet. Be the first to start the conversation!</p>
+                </div>
+            <% } %>
+        </section>
+    </main>
+</body>
+</html>
