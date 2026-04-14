@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Log In</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | Clubhouse</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/sign-up">Sign Up</a>
-        <a href="/log-in">Log In</a>
-      </nav>  
+    <div class="form-container">
+        <h1>Welcome Back</h1>
+        <p>Log in to post messages and see what's happening.</p>
+
+        <% if (locals.error) { %>
+            <div class="error-box">
+                <p><%= error %></p>
+            </div>
+        <% } %>
+
+        <form action="/log-in" method="POST">
+            <div class="form-group">
+                <label for="username">Email (Username)</label>
+                <input type="email" id="username" name="username" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Log In</button>
+        </form>
+
+        <p class="footer-text">
+            Don't have an account? <a href="/sign-up">Sign up here</a>.
+        </p>
+        <p class="footer-text">
+            <a href="/">← Back to Home</a>
+        </p>
     </div>
-  <h1>Log In</h1>
-  <form action="/log-in" method="POST">
-    <label for="username">Username</label>
-    <input id="username" name="username" placeholder="username" type="text" />
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" />
-    <button type="submit">Sign In</button>
-  </form>
 </body>
 </html>

@@ -18,7 +18,11 @@ const pool = new Pool({
 });
 
  const app = express();
+
  
+ app.use(express.static(path.join(__dirname, "public")));
+
+
  //views
  app.set("views", path.join(__dirname, "views"));
  app.set("view engine", "ejs");

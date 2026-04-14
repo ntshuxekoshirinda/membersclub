@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Club | Clubhouse</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>🔑 Secret Clubhouse Access</h1>
+        <p>Enter the secret passcode to become a full member and reveal message authors!</p>
+
+        <% if (locals.error) { %>
+            <div class="error-box">
+                <p><strong>Error:</strong> <%= error %></p>
+            </div>
+        <% } %>
+
+        <form action="/join-club" method="POST">
+            <div class="form-group">
+                <label for="passcode">Secret Passcode</label>
+                <input 
+                    type="text" 
+                    id="passcode" 
+                    name="passcode" 
+                    placeholder="Hint: What did we use in app.ts?" 
+                    required 
+                    autocomplete="off"
+                >
+            </div>
+
+            <button type="submit" class="btn-submit">Verify Passcode</button>
+        </form>
+
+        <p class="footer-text">
+            <a href="/">Nevermind, take me back</a>
+        </p>
+    </div>
+</body>
+</html>

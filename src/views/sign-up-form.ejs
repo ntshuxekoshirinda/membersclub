@@ -1,24 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Clubhouse</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/sign-up">Sign Up</a>
-        <a href="/log-in">Log In</a>
-      </nav>  
+    <div class="form-container">
+        <h1>Create Your Account</h1>
+        <p>Join the community to start posting messages.</p>
+
+        <% if (errors) { %>
+            <div class="error-box">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <form action="/sign-up" method="POST">
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" placeholder="John" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" placeholder="Doe" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Email Address (Username)</label>
+                <input type="email" id="username" name="username" placeholder="john@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="At least 8 characters" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat your password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="admin_code">Admin Access Code (Optional)</label>
+                <input type="password" id="admin_code" name="admin_code" placeholder="Secret Admin Key">
+            </div>
+
+            <button type="submit" class="btn-submit">Sign Up</button>
+        </form>
+
+        <p class="footer-text">
+            Already have an account? <a href="/log-in">Log in here</a>.
+        </p>
     </div>
-  <h1>Sign Up</h1>
-  <form action="/sign-up" method="POST">
-    <label for="username">Username</label>
-    <input id="username" name="username" placeholder="username" type="text" />
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" />
-    <button type="submit">Sign Up</button>
-  </form>
 </body>
 </html>
