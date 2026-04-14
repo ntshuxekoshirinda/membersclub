@@ -6,7 +6,27 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-   
+   <nav>
+    <div class="nav-container">
+        <h1 class="logo"><a href="/">Clubhouse</a></h1>
+        <div class="auth-links">
+            <% if (user) { %>
+                <span class="user-tag">Welcome, <%= user.first_name %></span>
+                
+                <a href="/create-message">New Message</a>
+                
+                <% if (!user.membership_status) { %>
+                    <a href="/join-club" class="btn-warning">Join Club</a>
+                <% } %>
+
+                <a href="/log-out" class="btn-logout">Log Out</a>
+            <% } else { %>
+                <a href="/log-in">Log In</a>
+                <a href="/sign-up" class="btn-primary">Sign Up</a>
+            <% } %>
+        </div>
+    </div>
+    </nav>
     <main class="container">
         <% if (!user) { %>
             <section class="welcome-hero">
@@ -52,7 +72,7 @@
                         <p class="content"><%= msg.text %></p>
 
                         <div class="card-footer">
-                            <% if (user && user.membership_status) { %>
+                            <% if (user && user.memberstatus) { %>
                                 <div class="meta">
                                     <span class="author">👤 <%= msg.first_name %> <%= msg.last_name %></span>
                                     <span class="date">📅 <%= new Date(msg.timestamp).toDateString() %></span>

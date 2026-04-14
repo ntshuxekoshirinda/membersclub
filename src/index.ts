@@ -154,7 +154,7 @@ app.get("/join-club", (req, res) => {
 app.post("/join-club", async (req, res) => {
   const SECRET_PASSCODE = "odin";
   if (req.body.passcode === SECRET_PASSCODE) {
-    await pool.query("UPDATE users SET membership_status = true WHERE id = $1", [(req.user as any).id]);
+    await pool.query("UPDATE users SET memberstatus = true WHERE id = $1", [(req.user as any).id]);
     res.redirect("/");
   } else {
     res.render("join-club", { error: "Incorrect Passcode!" });
